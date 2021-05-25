@@ -1,0 +1,232 @@
+{% extends ../base.html %}
+
+{% block title %}{{ _('Crafty Controller - Virtual Console') }}{% end %}
+
+{% block content %}
+
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-md-6">      
+        <h1 class="m-0">
+          {{ _('Logs for Server:') }} {{ data['server_name'] }}
+          <small style="font-size:.45em;">{{ _("I don't know... Have you checked the logs?") }}</small>
+        </h1>
+      </div>
+      <div class="col-md-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> {{ _('Home') }}</a></li>
+          <li class="active breadcrumb-item">{{ _('Logs') }}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+        
+            <div class="card card-secondary card-outline">
+                <div class="card-header">
+                  <h3>{{ data['server_name'] }} {{ _('Logs') }} <small>{{ _("Note: this page doesn't auto-refresh") }}</small></h3>
+                </div>
+                <div class="card-body">
+                  <div class="card card-primary card-outline card-outline-tabs">
+                      <div class="card-header p-0 border-bottom-0">
+                        <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-latest-tab" data-toggle="pill" href="#custom-tabs-latest" role="tab" aria-controls="custom-tabs-latest" aria-selected="false">{{ data['server_name'] }} Latest.log</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-crafty-tab" data-toggle="pill" href="#custom-tabs-crafty" role="tab" aria-controls="custom-tabs-crafty" aria-selected="true">Crafty.log</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-schedule-tab" data-toggle="pill" href="#custom-tabs-schedule" role="tab" aria-controls="custom-tabs-schedule" aria-selected="false">Schedule.log</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-access-tab" data-toggle="pill" href="#custom-tabs-access" role="tab" aria-controls="custom-tabs-access" aria-selected="false">Access.log</a>
+                          </li>
+
+                          <li class="nav-item"><a href="#" class="nav-link" id="search_tab" data-toggle="tab">{{ _('Search Results') }}</a></li>
+                          <li class="nav-item"><a class="nav-link">{{ _('Click On The Log Below To Scroll To Bottom') }}</a></li>
+                          <li class="nav-item float-right"><a id="search_box" href="#" class="nav-link text-muted float-right"><i class="fas fa-search" aria-hidden="true"></i>  {{ _('Search') }} Latest.log </a></li>
+                        </ul>
+                      </div>
+                      <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-four-tabContent">
+                          <div class="tab-pane fade show active" id="custom-tabs-latest" role="tabpanel" aria-labelledby="custom-tabs-latest-tab">
+                            <textarea id="logs" rows="25" readonly class="form-control">{% for d in data['log_data'] %}{{ d }}{% end %}</textarea>
+                          </div>
+                          <div class="tab-pane fade" id="custom-tabs-crafty" role="tabpanel" aria-labelledby="custom-tabs-crafty-tab">
+                            <textarea id="crafty_logs" rows="25" readonly class="form-control">{% for d in data['crafty_log'] %}{{ d }}{% end %}</textarea>
+                          </div>
+                          <div class="tab-pane fade" id="custom-tabs-schedule" role="tabpanel" aria-labelledby="custom-tabs-schedule-tab">
+                            <textarea id="schedule_logs" rows="25" readonly class="form-control">{% for d in data['scheduler'] %}{{ d }}{% end %}</textarea>
+                          </div>
+                          <div class="tab-pane fade" id="custom-tabs-access" role="tabpanel" aria-labelledby="custom-tabs-access-tab">
+                            <textarea id="access_logs" rows="25" readonly class="form-control">{% for d in data['access'] %}{{ d }}{% end %}</textarea>
+                          </div>
+
+                        </div>
+                      </div>
+                      <!-- /.card -->
+                    </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-6">
+              <div class="card card-secondary card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                        {{ _('Latest Errors') }}
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                      <table class="table dataTable" id="error_logs_table">
+                          <thead>
+                          <tr>
+                              <th>{{ _('Line') }}</th>
+                              <th>{{ _('Error') }}</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                              {% for e in data['errors']['errors'] %}
+                              <tr>
+                                  <td>{{ e[0] }}</td>
+                                  <td>{{ e[1] }}</td>
+                              </tr>
+                              {% end %}
+                          </tbody>
+                      </table>
+                  </div>
+                </div>
+          </div>
+          <div class="col-12 col-lg-6">
+              <div class="card card-secondary card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                        {{ _('Latest Warnings') }}
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                      <table class="table table-responsive dataTable" id="warning_logs_table">
+                          <thead>
+                          <tr>
+                              <th>{{ _('Line') }}</th>
+                              <th>{{ _('Warning') }}</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                              {% for w in data['errors']['warnings'] %}
+                              <tr>
+                                  <td>{{ w[0] }}</td>
+                                  <td>{{ w[1] }}</td>
+                              </tr>
+                              {% end %}
+                          </tbody>
+                      </table>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+
+</section>
+
+
+{% end %}
+
+{% block js-script %}
+
+<script>
+     //used to get cookies from browser - this is part of tornados xsrf protection - it's for extra security
+    function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+        return r ? r[1] : undefined;
+    }
+
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        scroll('logs')
+        $('#search_tab').hide()
+
+        $('#warning_logs_table').DataTable({
+            "paging":true,
+            "lengthChange": true,
+            "pageLength": 5,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "order": [[ 0, "desc" ]],
+        });
+
+        $('#error_logs_table').DataTable({
+            "paging":true,
+            "lengthChange": true,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "order": [[ 0, "desc" ]],
+        });
+
+        $('#custom-tabs-crafty').click(function(){
+          scroll('crafty_logs')
+        });
+
+        $('#custom-tabs-schedule').click(function(){
+          scroll('schedule_logs')
+        });
+
+        $('#custom-tabs-access').click(function(){
+
+          scroll('access_logs')
+        });
+
+        $('#search_box').click(function(){
+            bootbox.prompt({
+                title: "Enter Your Search String",
+                centerVertical: true,
+                callback: function(result){
+                    if (result){
+                    get_search_results(result)
+                    }
+                }
+            });
+        });
+
+
+    });
+
+    function get_search_results(search_string){
+        var token = getCookie("_xsrf")
+
+        data_to_send = { search : search_string, id: {{ data['server_id'] }}}
+
+        console.log('Sending search: ' + search_string)
+        $.ajax({
+          type: "POST",
+          headers: {'X-XSRFToken': token},
+          url: '/ajax/search_logs',
+          data: data_to_send,
+            success: function(data){
+                console.log("got data: " + data)
+                $('#search_tab').show();
+                $('#search_tab').trigger('click');
+                $('#search_results').html(data)
+            },
+        });
+    }
+
+    function scroll(element){
+        var logview = $('#'+element);
+        if(logview.length)
+           logview.scrollTop(logview[0].scrollHeight - logview.height());
+    }
+</script>
+
+{% end %}
