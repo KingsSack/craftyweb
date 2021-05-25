@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM adoptopenjdk/openjdk16:debianslim-jre
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
