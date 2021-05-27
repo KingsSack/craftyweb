@@ -1,4 +1,4 @@
-FROM adoptopenjdk/x86_64-ubuntu-jre-16.0.1_9
+FROM adoptopenjdk/jre
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
