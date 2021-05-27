@@ -2,6 +2,10 @@ FROM adoptopenjdk/openjdk16:latest
 
 #ENV DEBIAN_FRONTEND="noninteractive"
 
+RUN mkdir /opt/app
+COPY japp.jar /opt/app
+CMD ["java", "-jar", "/opt/app/japp.jar"]
+
 LABEL maintainer="Phillip Tarrant <https://gitlab.com/Ptarrant1> and Dockerfile created by kevdagoat <https://gitlab.com/kevdagoat>"
 
 RUN apt-get update
