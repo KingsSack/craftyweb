@@ -1,6 +1,6 @@
-FROM adoptopenjdk/openjdk16:latest
+FROM adoptopenjdk/x86_64-ubuntu-jre-16.0.1_9
 
-#ENV DEBIAN_FRONTEND="noninteractive"
+ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN mkdir /opt/app
 COPY japp.jar /opt/app
@@ -20,5 +20,5 @@ WORKDIR /crafty_web
 EXPOSE 8000
 EXPOSE 25500-25600
 
-#CMD ["python3", "crafty.py", "-c", "/crafty_web/configs/docker_config.yml"]
+CMD ["python3", "crafty.py", "-c", "/crafty_web/configs/docker_config.yml"]
 
