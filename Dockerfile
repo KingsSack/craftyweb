@@ -1,11 +1,11 @@
-FROM adoptopenjdk/openjdk16:debianslim-jre
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
 LABEL maintainer="Phillip Tarrant <https://gitlab.com/Ptarrant1> and Dockerfile created by kevdagoat <https://gitlab.com/kevdagoat>"
 
 RUN apt-get update
-RUN apt-get install -y python3 python3-dev python3-pip default-jre libmysqlclient-dev
+RUN apt-get install -y python3 python3-dev python3-pip openjdk-16-jre-headless libmysqlclient-dev
 
 COPY requirements.txt /crafty_web/requirements.txt
 RUN pip3 install -r /crafty_web/requirements.txt
