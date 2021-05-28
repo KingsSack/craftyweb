@@ -1,4 +1,4 @@
-FROM adoptopenjdk/16.0.1_9-jre-hotspot-focal
+FROM adoptopenjdk:16.0.1_9-jre-hotspot-focal
 RUN mkdir /opt/app
 COPY japp.jar /opt/app
 CMD ["java", "-jar", "/opt/app/japp.jar"]
