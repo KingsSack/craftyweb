@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND="noninteractive"
 LABEL maintainer="Phillip Tarrant <https://gitlab.com/Ptarrant1> and Dockerfile created by kevdagoat <https://gitlab.com/kevdagoat>"
 
 RUN apt-get update
-RUN apt-get install -y python3 python3-dev python3-pip libmysqlclient-dev
+RUN apt-get install -y python3 python3-dev build-essential python3-pip libssl1.1 libssl1.1=1.1.1f-1ubuntu2 libssl-dev libmysqlclient-dev
 
 COPY requirements.txt /crafty_web/requirements.txt
 RUN pip3 install -r /crafty_web/requirements.txt
